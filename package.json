@@ -1,0 +1,20 @@
+{
+  "name": "pw-bdd-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch:bdd": "nodemon -w ./src -w ./features -e feature,js,ts --exec \"pnpm exec bddgen\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.46.1",
+    "nodemon": "^3.1.4",
+    "playwright-bdd": "^7.2.2"
+  },
+  "dependencies": {
+    "playwright": "^1.46.1"
+  }
+}
