@@ -1,13 +1,13 @@
 import { defineConfig, devices } from '@playwright/test';
 import { defineBddConfig } from 'playwright-bdd';
 
-const testDir = defineBddConfig({
+const testDir = process.env.NO_BDD === "1" ? "tests" : defineBddConfig({
   features: 'features/**/*.feature',
-  steps: ['src/Steps/**/*.ts', 'src/Fixtures/**/*.ts'],
+  steps: ['src/Steps/**/*.ts', 'src/Fixtures/BddFixtures/**/*.ts'],
 });
 
 export default defineConfig({
-  testDir,
+  testDir: testDir,
   reporter: 'line',
   projects: [
     {

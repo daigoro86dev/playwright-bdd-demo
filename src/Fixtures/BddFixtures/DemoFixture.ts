@@ -1,6 +1,6 @@
 import { test as base, createBdd } from 'playwright-bdd';
-import DemoSteps from '../Steps/CoreSteps/DemoSteps';
-import DemoApiSteps from '../Steps/CoreSteps/DemoApiSteps';
+import DemoSteps from '../../Steps/CoreSteps/DemoSteps';
+import DemoApiSteps from '../../Steps/CoreSteps/DemoApiSteps';
 
 type DemoFixture = {
   _: { demoSteps: DemoSteps, demoApiSteps: DemoApiSteps }

@@ -1,4 +1,4 @@
-import { Given, Then } from '../../Fixtures/DemoFixture';
+import { Given, Then } from '../../Fixtures/BddFixtures/DemoFixture';
 
 Given('I open demo url {string}', async ({ _ }, url) => {
   await _.demoSteps.openDemoUrl(url);

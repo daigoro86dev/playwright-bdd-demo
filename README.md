@@ -23,3 +23,4 @@ use the test runner.
 ### Project Structure
 
 - Similar to <https://github.com/daigoro86dev/playwright-starter> with a few adjustments to support bddgen and feature files.
+- This template also shows how the same codebase can be shared between BDD compliant tests and regular tests with minimal effort.

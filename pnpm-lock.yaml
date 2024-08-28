@@ -15,6 +15,9 @@ importers:
       '@playwright/test':
         specifier: ^1.46.1
         version: 1.46.1
+      '@types/node':
+        specifier: ^22.5.1
+        version: 22.5.1
       nodemon:
         specifier: ^3.1.4
         version: 3.1.4
@@ -85,6 +88,9 @@ packages:
   '@teppeis/multimaps@3.0.0':
     resolution: {integrity: sha512-ID7fosbc50TbT0MK0EG12O+gAP3W3Aa/Pz4DaTtQtEvlc9Odaqi0de+xuZ7Li2GtK4HzEX7IuRWS/JmZLksR3Q==}
     engines: {node: '>=14'}
+
+  '@types/node@22.5.1':
+    resolution: {integrity: sha512-KkHsxej0j9IW1KKOOAA/XBA0z08UFSrRQHErzEfA3Vgq57eXIMYboIlHJuYIfd+lwCQjtKqUu3UnmKbtUc9yRw==}
 
   '@types/uuid@9.0.8':
     resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
@@ -313,6 +319,9 @@ packages:
   undefsafe@2.0.5:
     resolution: {integrity: sha512-WxONCrssBM8TSPRqN5EmsjVrsv4A8X12J4ArBiiayv3DyyG3ZlIg6yysuuSYdZsVz3TKcTg2fd//Ujd4CHV1iA==}
 
+  undici-types@6.19.8:
+    resolution: {integrity: sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==}
+
   uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
     hasBin: true
@@ -391,6 +400,10 @@ snapshots:
       playwright: 1.46.1
 
   '@teppeis/multimaps@3.0.0': {}
+
+  '@types/node@22.5.1':
+    dependencies:
+      undici-types: 6.19.8
 
   '@types/uuid@9.0.8': {}
 
@@ -606,6 +619,8 @@ snapshots:
   touch@3.1.1: {}
 
   undefsafe@2.0.5: {}
+
+  undici-types@6.19.8: {}
 
   uuid@9.0.1: {}
 
