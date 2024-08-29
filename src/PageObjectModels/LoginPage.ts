@@ -22,4 +22,8 @@ export default class LoginPage extends BasePage {
   async clickLoginButton() {
     await this.page.locator(".base-button.base-button--type-button.button.is-primary").click();
   }
+
+  async clickCreateAccountLink() {
+    await this.page.locator("a[href='/register']").click();
+  }
 }

@@ -1,5 +1,6 @@
 import { Page } from "playwright";
 import BasePageSteps from "./Base/BasePageSteps";
+import UserRegisterRequest from "../../Common/Data/Dtos/UserRegisterRequest";
 
 export default class DemoSteps extends BasePageSteps {
   constructor(page: Page) {
@@ -20,4 +21,19 @@ export default class DemoSteps extends BasePageSteps {
     });
   }
 
+  async clickCreateAccountLink() {
+    await this.runLoginPage(async (_) => {
+      await _.clickCreateAccountLink();
+    });
+  }
+
+  async registerUser() {
+    const user = this.getFakeDataGenerator().getFakeUser();
+    await this.runRegisterPage(async (_) => {
+      await _.enterUsername(user.username!);
+      await _.enterEmail(user.email!);
+      await _.enterPassword(user.password!);
+      await _.clickCreatAccountButton();
+    });
+  }
 }

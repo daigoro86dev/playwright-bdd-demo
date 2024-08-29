@@ -3,6 +3,7 @@ import BaseApiHandler from "./BaseApiHandler";
 import DemoApiModule from "../Modules/DemoApiModule";
 import UserLoginRequest from "../../Data/Dtos/UserLoginRequest";
 import CustomResponse from "../Modules/CustomResponse";
+import UserRegisterRequest from "../../Data/Dtos/UserRegisterRequest";
 
 export default class DemoApiHandler extends BaseApiHandler {
   constructor(readonly apiRequestContext: APIRequestContext) {
@@ -16,5 +17,9 @@ export default class DemoApiHandler extends BaseApiHandler {
 
   async login(user: UserLoginRequest) {
     return await this.setupTemplateDemoApiModule(async (_) => await _.login(user));
+  }
+
+  async register(user: UserRegisterRequest) {
+    return await this.setupTemplateDemoApiModule(async (_) => await _.register(user));
   }
 }

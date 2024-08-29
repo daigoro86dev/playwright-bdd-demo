@@ -12,6 +12,9 @@ importers:
         specifier: ^1.46.1
         version: 1.46.1
     devDependencies:
+      '@faker-js/faker':
+        specifier: ^8.4.1
+        version: 8.4.1
       '@playwright/test':
         specifier: ^1.46.1
         version: 1.46.1
@@ -67,6 +70,10 @@ packages:
 
   '@cucumber/tag-expressions@6.1.0':
     resolution: {integrity: sha512-+3DwRumrCJG27AtzCIL37A/X+A/gSfxOPLg8pZaruh5SLumsTmpvilwroVWBT2fPzmno/tGXypeK5a7NHU4RzA==}
+
+  '@faker-js/faker@8.4.1':
+    resolution: {integrity: sha512-XQ3cU+Q8Uqmrbf2e0cIC/QN43sTBSC8KF12u29Mb47tWrt2hAgBXSgpZMj4Ao8Uk0iJcU99QsOCaIL8934obCg==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -382,6 +389,8 @@ snapshots:
       uuid: 9.0.1
 
   '@cucumber/tag-expressions@6.1.0': {}
+
+  '@faker-js/faker@8.4.1': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:

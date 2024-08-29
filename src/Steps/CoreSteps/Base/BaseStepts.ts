@@ -1,5 +1,6 @@
 import { DataStoreValues } from "../../../Common/Core/DataStoreValues";
 import ProjectDataStore from "../../../Common/Core/ProjectDataStore";
+import FakeDataGenerator from "../../../Common/Data/Setup/FakeDataGenerator";
 
 export default class BaseSteps {
 
@@ -13,5 +14,9 @@ export default class BaseSteps {
 
   protected getStoreMap() {
     return ProjectDataStore.GetInstance().getStoreMap();
+  }
+
+  protected getFakeDataGenerator() {
+    return FakeDataGenerator.GetInstance();
   }
 }

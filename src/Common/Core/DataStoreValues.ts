@@ -1,1 +1,1 @@
-export type DataStoreValues = 'token';
+export type DataStoreValues = 'token' | 'registeredUser';

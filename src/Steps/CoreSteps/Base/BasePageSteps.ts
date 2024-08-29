@@ -3,6 +3,7 @@ import BasePageDependency from "../../../Common/Core/BasePageDependency";
 import { GenericPageConstructor } from "../../../Common/Core/GenericPageConstructor";
 import BaseSteps from "./BaseStepts";
 import LoginPage from "../../../PageObjectModels/LoginPage";
+import RegisterPage from "../../../PageObjectModels/RegisterPage";
 
 export default class BasePageSteps extends BaseSteps {
   constructor(private readonly page: Page) {
@@ -22,5 +23,9 @@ export default class BasePageSteps extends BaseSteps {
 
   protected async runLoginPage(fn: (p: LoginPage) => Promise<void>) {
     return await this.run(LoginPage, async (p) => fn(p));
+  }
+
+  protected async runRegisterPage(fn: (p: RegisterPage) => Promise<void>) {
+    return await this.run(RegisterPage, async (p) => fn(p));
   }
 }

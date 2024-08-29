@@ -10,6 +10,12 @@ Feature: Demo site
       | username | password |
       | demo     | demo     |
 
+  @DemoUI
+  Scenario: Register User
+    Given I open demo url "https://try.vikunja.io/login"
+    When I click the Create Account link
+    Then I register a new user
+
   @DemoAPI
   Scenario Outline: Login User with <username> through API
     Given I login through API with username "<username>" and password "<password>" credentials
@@ -18,3 +24,8 @@ Feature: Demo site
     Examples:
       | username | password |
       | demo     | demo     |
+
+  @DemoAPI
+  Scenario: Register User through API
+    Given I register through API
+    Then I check the registered user

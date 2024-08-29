@@ -2,6 +2,7 @@ import { APIRequestContext } from "playwright";
 import BaseApiSteps from "./Base/BaseApiSteps";
 import UserLoginRequest from "../../Common/Data/Dtos/UserLoginRequest";
 import { expect } from "playwright/test";
+import UserRegisterResDto from "../../Common/Data/Dtos/UserRegisterResDto";
 
 export default class DemoApiSteps extends BaseApiSteps {
   constructor(apiRequestContext: APIRequestContext) {
@@ -27,4 +28,17 @@ export default class DemoApiSteps extends BaseApiSteps {
     expect(token.length).toBe(261);
   }
 
+  async registerUser() {
+    await this.runDemoApiHandler(async (_) => {
+      const user = this.getFakeDataGenerator().getFakeUser();
+      const res = await _.register(user);
+      expect(res.statusCode).toBe(200);
+      this.setStoreKeyVal<UserRegisterResDto>("registeredUser", res.body!);
+    });
+  }
+
+  async checkRegisteredUser() {
+    const user = this.getStoreVal<UserRegisterResDto>("registeredUser");
+    expect(user).not.toBe(null);
+  }
 }
