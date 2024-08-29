@@ -1,4 +1,4 @@
-import { test } from '../../src/Fixtures/RegularFixtures/DemoFixture';
+import { test } from '../../src/Fixtures/HybridFixtures/DemoFixture';
 
 test.describe('Demo site', () => {
   test('Login user', async ({ _ }) => {

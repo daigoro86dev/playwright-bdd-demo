@@ -4,6 +4,8 @@ import FakeDataGenerator from "../../../Common/Data/Setup/FakeDataGenerator";
 
 export default class BaseSteps {
 
+  private fakeDataGenerator: FakeDataGenerator;
+
   protected getStoreVal<T>(key: DataStoreValues) {
     return ProjectDataStore.GetInstance().getStoreVal<T>(key);
   }
@@ -17,6 +19,7 @@ export default class BaseSteps {
   }
 
   protected getFakeDataGenerator() {
-    return FakeDataGenerator.GetInstance();
+    this.fakeDataGenerator = new FakeDataGenerator();
+    return this.fakeDataGenerator;
   }
 }

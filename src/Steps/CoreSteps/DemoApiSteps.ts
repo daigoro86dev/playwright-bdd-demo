@@ -32,7 +32,7 @@ export default class DemoApiSteps extends BaseApiSteps {
     await this.runDemoApiHandler(async (_) => {
       const user = this.getFakeDataGenerator().getFakeUser();
       const res = await _.register(user);
-      expect(res.statusCode).toBe(200);
+      expect(res.ok).toBeTruthy();
       this.setStoreKeyVal<UserRegisterResDto>("registeredUser", res.body!);
     });
   }

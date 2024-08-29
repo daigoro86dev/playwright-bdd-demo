@@ -30,6 +30,7 @@ export default class AbstractModule {
     const customResponse = new CustomResponse<T>();
     customResponse.setStatusCode(response.status());
     customResponse.setBody(await (<T>response.json()));
+    customResponse.setOk(response.ok());
     return customResponse;
   }
 }

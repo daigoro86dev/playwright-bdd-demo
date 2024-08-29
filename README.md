@@ -2,7 +2,7 @@
 
 ## Playwright Template Project with BDD
 
-- This project is a variation of <https://github.com/daigoro86dev/playwright-starter> with Cucumber Integration through <https://vitalets.github.io/playwright-bdd/#/>. 
+- This project is a variation of <https://github.com/daigoro86dev/playwright-starter> with Cucumber Integration through <https://vitalets.github.io/playwright-bdd/#/>.
 
 ### Installation
 
@@ -23,4 +23,4 @@ use the test runner.
 ### Project Structure
 
 - Similar to <https://github.com/daigoro86dev/playwright-starter> with a few adjustments to support bddgen and feature files.
-- This template also shows how the same codebase can be shared between BDD compliant tests and regular tests with minimal effort.
+- This template also shows how the same codebase can be shared between BDD compliant tests and regular tests with minimal effort. In that case, it's possible to use a hybrid fixture that will extend a test object based on the **NO_BDD** environment value which supports both BDD and plain Playwright fixtures.

@@ -1,4 +1,6 @@
-import { Given, Then, When } from '../../Fixtures/BddFixtures/DemoFixture';
+import { createBdd } from 'playwright-bdd';
+import { test } from '../../Fixtures/HybridFixtures/DemoFixture';
+const { Given, Then, When } = createBdd(test);
 
 Given('I open demo url {string}', async ({ _ }, url) => {
   await _.demoSteps.openDemoUrl(url);

@@ -3,16 +3,7 @@ import UserRegisterRequest from "../Dtos/UserRegisterRequest";
 
 export default class FakeDataGenerator {
 
-  private static instance: FakeDataGenerator;
-
   constructor() { }
-
-  public static GetInstance() {
-    if (!FakeDataGenerator.instance) {
-      FakeDataGenerator.instance = new FakeDataGenerator();
-    }
-    return FakeDataGenerator.instance;
-  }
 
   getFakeUser(): UserRegisterRequest {
     const user = new UserRegisterRequest();
