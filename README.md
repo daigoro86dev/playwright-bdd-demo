@@ -24,3 +24,10 @@ use the test runner.
 
 - Similar to <https://github.com/daigoro86dev/playwright-starter> with a few adjustments to support bddgen and feature files.
 - This template also shows how the same codebase can be shared between BDD compliant tests and regular tests with minimal effort. In that case, it's possible to use a hybrid fixture that will extend a test object based on the **NO_BDD** environment value which supports both BDD and plain Playwright fixtures.
+
+### Docker Setup
+
+- To run tests within a docker container
+- Build image with ```docker build -t playwright-docker .```
+- Run container with BDD: ```docker run -e NO_BDD="0" -it playwright-docker:latest /bin/bash -c "pnpm run bddgen; pnpm test"```
+- Run container without BDD: ```docker run -e NO_BDD="1" -it playwright-docker:latest /bin/bash -c "pnpm test"```
