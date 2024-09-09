@@ -31,6 +31,7 @@ pipeline {
             steps {
                 script {
                     echo sh(script: "curl -LsSf https://astral.sh/uv/install.sh | sh")
+                    echo sh(script: "source $HOME/.cargo/env")
                     echo sh(script: "uv python install 3.12")
                 }
             }
