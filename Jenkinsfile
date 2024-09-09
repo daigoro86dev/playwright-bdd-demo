@@ -30,7 +30,7 @@ pipeline {
         stage("Execute bddgen"){
             steps {
                 script {
-                    echo sh(script: "npx bddgn")
+                    echo sh(script: "npx bddgen")
                 }
             }
         }
