@@ -38,26 +38,26 @@ pipeline {
             }
         }    
     }
-    post {
-        always {
-            archiveArtifacts artifacts: 'results.xml', followSymlinks: false
-            // archiveArtifacts artifacts: 'allure-results/*', followSymlinks: false
-            // script {
-            //     ws("$workspace/") {
-            //         allure([
-            //             includeProperties: false,
-            //             jdk: '',
-            //             properties: [],
-            //             reportBuildPolicy: 'ALWAYS',
-            //             results: [
-            //                 [path: 'allure-results']
-            //             ]
-            //         ])
-            //     }
-            // }
-            cleanWs()
-        }
-    }
+    // post {
+    //     always {
+    //         archiveArtifacts artifacts: 'results.xml', followSymlinks: false
+    //         // archiveArtifacts artifacts: 'allure-results/*', followSymlinks: false
+    //         // script {
+    //         //     ws("$workspace/") {
+    //         //         allure([
+    //         //             includeProperties: false,
+    //         //             jdk: '',
+    //         //             properties: [],
+    //         //             reportBuildPolicy: 'ALWAYS',
+    //         //             results: [
+    //         //                 [path: 'allure-results']
+    //         //             ]
+    //         //         ])
+    //         //     }
+    //         // }
+    //         cleanWs()
+    //     }
+    // }
 }
 
 String getTestCommand(String shard) {
