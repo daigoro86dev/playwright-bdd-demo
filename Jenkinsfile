@@ -2,7 +2,7 @@
 import groovy.json.JsonOutput
 
 pipeline {
-    agent { dockerfile true }
+    agent { docker { image 'mcr.microsoft.com/playwright:v1.46.0-jammy' } }
     environment {
         NODE_ENV = "${env.NODE_ENV}"
         PW_PROJECT= "${env.PW_PROJECT}"
@@ -16,10 +16,17 @@ pipeline {
         USE_ALLURE = 1
     }
     stages {
+        stage("Install Node Dependencies"){
+            steps {
+                script {
+                    echo sh(script: "npm i --no-fund --no-audit --omit=dev")
+                }
+            }
+        }
         stage("Execute bddgen"){
             steps {
                 script {
-                    echo sh(script: "npm run bddgen")
+                    echo sh(script: "npx bddgen")
                 }
             }
         }
@@ -30,34 +37,40 @@ pipeline {
                 }
             }
         }
-        stage("Send TR report"){
-            steps{
-                script{
-                    sendReportToTestRail()
-                }
-            }
-        }    
+        // stage("Send TR report"){
+        //     agent {
+        //         docker { image 'node:20.17.0-alpine3.20' }
+        //     }
+        //     steps {
+        //         script {
+        //             echo sh("curl -LsSf https://astral.sh/uv/install.sh | sh")
+        //             echo sh("uv python install 3.12")
+        //             // sendReportToTestRail()
+        //         }
+        //     }
+        // }    
     }
-    // post {
-    //     always {
-    //         archiveArtifacts artifacts: 'results.xml', followSymlinks: false
-    //         // archiveArtifacts artifacts: 'allure-results/*', followSymlinks: false
-    //         // script {
-    //         //     ws("$workspace/") {
-    //         //         allure([
-    //         //             includeProperties: false,
-    //         //             jdk: '',
-    //         //             properties: [],
-    //         //             reportBuildPolicy: 'ALWAYS',
-    //         //             results: [
-    //         //                 [path: 'allure-results']
-    //         //             ]
-    //         //         ])
-    //         //     }
-    //         // }
-    //         cleanWs()
-    //     }
-    // }
+    post {
+        always {
+            archiveArtifacts artifacts: 'results.xml', followSymlinks: false
+            // archiveArtifacts artifacts: 'allure-results/*', followSymlinks: false
+            // script {
+            //     ws("$workspace/") {
+            //         allure([
+            //             includeProperties: false,
+            //             jdk: '',
+            //             properties: [],
+            //             reportBuildPolicy: 'ALWAYS',
+            //             results: [
+            //                 [path: 'allure-results']
+            //             ]
+            //         ])
+            //     }
+            // }
+            sendReportToTestRail()
+            cleanWs()
+        }
+    }
 }
 
 String getTestCommand(String shard) {
