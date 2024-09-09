@@ -2,7 +2,7 @@
 import groovy.json.JsonOutput
 
 pipeline {
-    agent { docker true }
+    agent { dockerfile true }
     environment {
         NODE_ENV = "${env.NODE_ENV}"
         PW_PROJECT= "${env.PW_PROJECT}"
