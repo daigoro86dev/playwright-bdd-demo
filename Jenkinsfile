@@ -27,15 +27,6 @@ pipeline {
                 }
             }
         }
-        stage("Install uv and python"){
-            steps {
-                script {
-                    echo sh(script: "curl -LsSf https://astral.sh/uv/install.sh | sh")
-                    echo sh(script: "source $HOME/.cargo/env")
-                    echo sh(script: "uv python install 3.12")
-                }
-            }
-        }
         stage("Execute bddgen"){
             steps {
                 script {
@@ -47,6 +38,18 @@ pipeline {
             steps {
                 script {
                     parallel executeTestParallel()
+                }
+            }
+        }
+        stage("Install uv and python"){
+            agent {
+                docker { image 'python:3.12-slim-bookworm' }
+            }
+            steps {
+                script {
+                    echo sh(script: "curl -LsSf https://astral.sh/uv/install.sh | sh")
+                    echo sh(script: "source $HOME/.cargo/env")
+                    echo sh(script: "uv python install 3.12")
                 }
             }
         }
