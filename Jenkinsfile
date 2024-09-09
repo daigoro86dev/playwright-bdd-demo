@@ -23,8 +23,8 @@ pipeline {
         stage("Install Node Dependencies"){
             steps {
                 script {
-                    sh 'corepack enable'
-                    sh 'corepack prepare pnpm@latest-9 --activate'
+                    sh 'sudo corepack enable'
+                    sh 'sudo corepack prepare pnpm@latest-9 --activate'
                     echo sh(script: "pnpm i --prod")
                 }
             }
