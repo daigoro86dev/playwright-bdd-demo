@@ -48,7 +48,6 @@ pipeline {
             }
             steps {
                 script {
-                    echo sh("curl -LsSf https://astral.sh/uv/install.sh | sh")
                     echo sh("uv python install 3.12")
                     // sendReportToTestRail()
                 }
