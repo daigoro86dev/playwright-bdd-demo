@@ -6,9 +6,10 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '5'))
         timeout(time: 30, unit: 'MINUTES')
     }
-    agent { docker { image 'mcr.microsoft.com/playwright:v1.43.0-jammy' } }
+    agent {
+        agent { docker { image 'mcr.microsoft.com/playwright:v1.43.0-jammy' } }
+    }
     environment {
-        COREPACK_HOME = "${JENKINS_HOME}"
         NODE_ENV = "${env.NODE_ENV}"
         PW_PROJECT= "${env.PW_PROJECT}"
         PW_WORKERS = "${env.PW_WORKERS}"
@@ -24,16 +25,14 @@ pipeline {
         stage("Install Node Dependencies"){
             steps {
                 script {
-                    sh 'corepack enable'
-                    sh 'corepack prepare pnpm@latest-9 --activate'
-                    echo sh(script: "pnpm i --prod")
+                    echo sh(script: "npm i --no-fund --no-audit --omit=dev")
                 }
             }
         }
-        stage("Generate tests with bddgen"){
+        stage("Execute bddgen"){
             steps {
                 script {
-                    echo sh(script: "pnpm exec bddgen")
+                    echo sh(script: "npx bddgn")
                 }
             }
         }
@@ -68,7 +67,7 @@ pipeline {
 }
 
 String getTestCommand(String shard) {
-    return "pnpm exec playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
+    return "npx playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
 }
 
 void executeTestParallel() {
