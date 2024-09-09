@@ -2,10 +2,6 @@
 import groovy.json.JsonOutput
 
 pipeline {
-    options {
-        buildDiscarder(logRotator(numToKeepStr: '5'))
-        timeout(time: 30, unit: 'MINUTES')
-    }
     // agent { docker { image 'mcr.microsoft.com/playwright:v1.46.0-jammy' } }
     agent none
     environment {
@@ -47,10 +43,7 @@ pipeline {
                 docker { image 'ghcr.io/astral-sh/uv:0.4.7-python3.9-alpine' }
             }
             steps {
-                script {
-                    echo sh("uv python install 3.12")
-                    // sendReportToTestRail()
-                }
+                sh "uvx trcli"
             }
         }    
     }
