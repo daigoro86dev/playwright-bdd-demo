@@ -6,7 +6,7 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '5'))
         timeout(time: 30, unit: 'MINUTES')
     }
-    agent { docker { image 'mcr.microsoft.com/playwright:v1.46.0-jammy' } }
+    agent { dockerfile true }
     environment {
         NODE_ENV = "${env.NODE_ENV}"
         PW_PROJECT= "${env.PW_PROJECT}"
@@ -38,18 +38,6 @@ pipeline {
             steps {
                 script {
                     parallel executeTestParallel()
-                }
-            }
-        }
-        stage("Install uv and python"){
-            agent {
-                docker { image 'python:3.12-slim-bookworm' }
-            }
-            steps {
-                script {
-                    echo sh(script: "curl -LsSf https://astral.sh/uv/install.sh | sh")
-                    echo sh(script: "source $HOME/.cargo/env")
-                    echo sh(script: "uv python install 3.12")
                 }
             }
         }
@@ -96,7 +84,5 @@ void executeTestParallel() {
 }
 
 void sendReportToTestRail(){
-    stage("Send report to TR") {
-        echo sh(script: "uvx trcli -y -h '${TR_DOMAIN}' --project 'Demo Project' --username '${TR_USERNAME}' --password '${TR_PASSWORD}' parse_junit --title 'Playwright Automated Demo Test Run' -f './results.xml'")
-    }
+    echo sh(script: "uvx trcli -y -h '${TR_DOMAIN}' --project 'Demo Project' --username '${TR_USERNAME}' --password '${TR_PASSWORD}' parse_junit --title 'Playwright Automated Demo Test Run' -f './results.xml'")
 }
