@@ -6,9 +6,7 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '5'))
         timeout(time: 30, unit: 'MINUTES')
     }
-    agent {
-        agent { docker { image 'mcr.microsoft.com/playwright:v1.43.0-jammy' } }
-    }
+    agent { docker { image 'mcr.microsoft.com/playwright:v1.43.0-jammy' } }
     environment {
         NODE_ENV = "${env.NODE_ENV}"
         PW_PROJECT= "${env.PW_PROJECT}"
@@ -27,6 +25,12 @@ pipeline {
                 script {
                     echo sh(script: "npm install -g pnpm")
                     echo sh(script: "pnpm i --prod")
+                }
+            }
+        }
+        stage("Generate tests with bddgen"){
+            steps {
+                script {
                     echo sh(script: "pnpm exec bddgen")
                 }
             }
