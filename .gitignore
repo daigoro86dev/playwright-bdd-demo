@@ -2,3 +2,4 @@ node_modules
 .features-gen
 test-results
 playwright-report
+results.xml
