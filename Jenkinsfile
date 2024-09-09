@@ -27,6 +27,14 @@ pipeline {
                 }
             }
         }
+        stage("Install uv and python"){
+            steps {
+                script {
+                    echo sh(script: "curl -LsSf https://astral.sh/uv/install.sh | less")
+                    echo sh(script: "uv python install 3.12")
+                }
+            }
+        }
         stage("Execute bddgen"){
             steps {
                 script {
@@ -59,6 +67,7 @@ pipeline {
             //         ])
             //     }
             // }
+            sendReportToTestRail()
             cleanWs()
         }
     }
@@ -80,4 +89,10 @@ void executeTestParallel() {
         }
     }
     return tests
+}
+
+void sendReportToTestRail(){
+    stage("Send report to TR") {
+        echo sh(script: "uvx trcli -y -h '${TR_DOMAIN}' --project 'Demo Project' --username '${TR_USERNAME}' --password '${TR_PASSWORD}' parse_junit --title 'Playwright Automated Demo Test Run' -f './results.xml'")
+    }
 }

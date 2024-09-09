@@ -11,6 +11,33 @@ Feature: Demo site
       | demo     | demo     |
 
   @DemoUI
+  Scenario Outline: Login User with <username> II
+    Given I open demo url "https://try.vikunja.io/login"
+    Then I login with username "<username>" and password "<password>" credentials
+
+    Examples:
+      | username | password |
+      | demo     | demo     |
+
+  @DemoUI
+  Scenario Outline: Login User with <username> III
+    Given I open demo url "https://try.vikunja.io/login"
+    Then I login with username "<username>" and password "<password>" credentials
+
+    Examples:
+      | username | password |
+      | demo     | demo     |
+
+  @DemoUI
+  Scenario Outline: Login User with <username> IV
+    Given I open demo url "https://try.vikunja.io/login"
+    Then I login with username "<username>" and password "<password>" credentials
+
+    Examples:
+      | username | password |
+      | demo     | demo     |
+
+  @DemoUI
   Scenario: Register User
     Given I open demo url "https://try.vikunja.io/login"
     When I click the Create Account link
