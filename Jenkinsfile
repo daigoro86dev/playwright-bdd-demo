@@ -6,7 +6,7 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '5'))
         timeout(time: 30, unit: 'MINUTES')
     }
-    agent { docker { image 'mcr.microsoft.com/playwright:v1.43.0-jammy' } }
+    agent { docker { image 'mcr.microsoft.com/playwright:v1.46.0-jammy' } }
     environment {
         NODE_ENV = "${env.NODE_ENV}"
         PW_PROJECT= "${env.PW_PROJECT}"
