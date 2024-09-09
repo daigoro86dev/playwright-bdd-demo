@@ -7,6 +7,7 @@ pipeline {
         timeout(time: 30, unit: 'MINUTES')
     }
     // agent { docker { image 'mcr.microsoft.com/playwright:v1.46.0-jammy' } }
+    agent none
     environment {
         NODE_ENV = "${env.NODE_ENV}"
         PW_PROJECT= "${env.PW_PROJECT}"
