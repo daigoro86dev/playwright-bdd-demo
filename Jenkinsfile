@@ -8,6 +8,7 @@ pipeline {
     }
     agent { docker { image 'mcr.microsoft.com/playwright:v1.43.0-jammy' } }
     environment {
+        COREPACK_HOME = "${JENKINS_HOME}"
         NODE_ENV = "${env.NODE_ENV}"
         PW_PROJECT= "${env.PW_PROJECT}"
         PW_WORKERS = "${env.PW_WORKERS}"
@@ -23,8 +24,8 @@ pipeline {
         stage("Install Node Dependencies"){
             steps {
                 script {
-                    sh 'sudo corepack enable'
-                    sh 'sudo corepack prepare pnpm@latest-9 --activate'
+                    sh 'corepack enable'
+                    sh 'corepack prepare pnpm@latest-9 --activate'
                     echo sh(script: "pnpm i --prod")
                 }
             }
