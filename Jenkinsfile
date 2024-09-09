@@ -20,13 +20,6 @@ pipeline {
         USE_ALLURE = 1
     }
     stages {
-        stage("Install Node Dependencies"){
-            steps {
-                script {
-                    echo sh(script: "npm i --no-fund --no-audit --omit=dev")
-                }
-            }
-        }
         stage("Execute bddgen"){
             steps {
                 script {
@@ -66,7 +59,7 @@ pipeline {
 }
 
 String getTestCommand(String shard) {
-    return "npx playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
+    return "pnpm exec playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
 }
 
 void executeTestParallel() {
