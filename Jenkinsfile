@@ -6,7 +6,7 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '5'))
         timeout(time: 30, unit: 'MINUTES')
     }
-    agent { dockerfile true }
+    agent { docker { image 'mcr.microsoft.com/playwright:v1.46.0-jammy' } }
     environment {
         NODE_ENV = "${env.NODE_ENV}"
         PW_PROJECT= "${env.PW_PROJECT}"
@@ -20,27 +20,39 @@ pipeline {
         USE_ALLURE = 1
     }
     stages {
-        stage("Execute bddgen"){
+        // stage("Install Node Dependencies"){
+        //     steps {
+        //         script {
+        //             echo sh(script: "npm i --no-fund --no-audit --omit=dev")
+        //         }
+        //     }
+        // }
+        // stage("Execute bddgen"){
+        //     steps {
+        //         script {
+        //             echo sh(script: "npx bddgen")
+        //         }
+        //     }
+        // }
+        // stage("Run PlayWright tests"){
+        //     steps {
+        //         script {
+        //             parallel executeTestParallel()
+        //         }
+        //     }
+        // }
+        stage("Send TR report"){
+            agent {
+                docker { image 'node:20.17.0-alpine3.20' }
+            }
             steps {
                 script {
-                    echo sh(script: "npx bddgen")
+                    echo sh("curl -LsSf https://astral.sh/uv/install.sh | sh")
+                    echo sh("uv python install 3.12")
+                    // sendReportToTestRail()
                 }
             }
-        }
-        stage("Run PlayWright tests"){
-            steps {
-                script {
-                    parallel executeTestParallel()
-                }
-            }
-        }
-        stage("Send test report"){
-            steps {
-                script {
-                    sendReportToTestRail()
-                }
-            }
-        }
+        }    
     }
     post {
         always {
@@ -59,13 +71,14 @@ pipeline {
             //         ])
             //     }
             // }
+            sendReportToTestRail()
             cleanWs()
         }
     }
 }
 
 String getTestCommand(String shard) {
-    return "pnpm exec playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
+    return "npx playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
 }
 
 void executeTestParallel() {
