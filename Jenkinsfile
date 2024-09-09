@@ -30,7 +30,7 @@ pipeline {
         stage("Install uv and python"){
             steps {
                 script {
-                    echo sh(script: "curl -LsSf https://astral.sh/uv/install.sh | less")
+                    echo sh(script: "curl -LsSf https://astral.sh/uv/install.sh | sh")
                     echo sh(script: "uv python install 3.12")
                 }
             }
