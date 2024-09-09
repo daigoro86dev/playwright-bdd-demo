@@ -55,7 +55,6 @@ pipeline {
             //         ])
             //     }
             // }
-            sendReportToTestRail()
             cleanWs()
         }
     }
