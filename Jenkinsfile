@@ -19,7 +19,7 @@ pipeline {
         stage("Execute bddgen"){
             steps {
                 script {
-                    echo sh(script: "pnpm exec bddgen")
+                    echo sh(script: "npx bddgen")
                 }
             }
         }
@@ -61,7 +61,7 @@ pipeline {
 }
 
 String getTestCommand(String shard) {
-    return "pnpm exec playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
+    return "npx playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
 }
 
 void executeTestParallel() {
