@@ -43,7 +43,7 @@ pipeline {
                 docker { image 'ghcr.io/astral-sh/uv:0.4.7-python3.9-alpine' }
             }
             steps {
-                sh "uvx trcli"
+                sh 'uvx trcli'
             }
         }    
     }
