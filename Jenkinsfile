@@ -6,7 +6,7 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '5'))
         timeout(time: 30, unit: 'MINUTES')
     }
-    agent { docker { image 'mcr.microsoft.com/playwright:v1.46.0-jammy' } }
+    // agent { docker { image 'mcr.microsoft.com/playwright:v1.46.0-jammy' } }
     environment {
         NODE_ENV = "${env.NODE_ENV}"
         PW_PROJECT= "${env.PW_PROJECT}"
@@ -43,7 +43,7 @@ pipeline {
         // }
         stage("Send TR report"){
             agent {
-                docker { image 'node:20.17.0-alpine3.20' }
+                docker { image 'python:3.12-slim-bookworm' }
             }
             steps {
                 script {
