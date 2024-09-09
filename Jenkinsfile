@@ -34,6 +34,13 @@ pipeline {
                 }
             }
         }
+        stage("Send test report"){
+            steps {
+                script {
+                    sendReportToTestRail()
+                }
+            }
+        }
     }
     post {
         always {
@@ -52,7 +59,6 @@ pipeline {
             //         ])
             //     }
             // }
-            sendReportToTestRail()
             cleanWs()
         }
     }
