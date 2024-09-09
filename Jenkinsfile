@@ -23,7 +23,7 @@ pipeline {
         stage("Install Node Dependencies"){
             steps {
                 script {
-                    echo sh(script: "npm install -g pnpm")
+                    echo sh(script: "wget -qO- https://get.pnpm.io/install.sh | ENV="$HOME/.shrc" SHELL="$(which sh)" sh -")
                     echo sh(script: "pnpm i --prod")
                 }
             }
