@@ -44,7 +44,7 @@ pipeline {
         // }
         stage("Send TR report"){
             agent {
-                docker { image 'python:3.12-slim-bookworm' }
+                docker { image 'ghcr.io/astral-sh/uv:0.4.7-python3.9-alpine' }
             }
             steps {
                 script {
