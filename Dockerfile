@@ -19,7 +19,7 @@ FROM base
 ENV NODE_ENV true
 RUN apt-get update && apt-get -y install libnss3 libatk-bridge2.0-0 libdrm-dev libxkbcommon-dev libgbm-dev libasound-dev libatspi2.0-0 libxshmfence-dev
 
-RUN pnpm i
+RUN pnpm i --prod
 RUN pnpm exec playwright install --with-deps
 
 RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates

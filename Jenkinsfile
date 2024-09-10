@@ -2,7 +2,7 @@
 import groovy.json.JsonOutput
 
 pipeline {
-    agent none
+    agent { docker { image 'daigoro86dev/playwright-bdd-docker:latest' } }
     environment {
         NODE_ENV = "${env.NODE_ENV}"
         PW_PROJECT= "${env.PW_PROJECT}"
@@ -16,54 +16,20 @@ pipeline {
         USE_ALLURE = 1
     }
     stages {
-        stage("Install Node Dependencies"){
-            agent { docker { 
-                    image 'daigoro86dev/playwright-bdd-docker:latest' 
-                    reuseNode true
-                } 
-            }
-            steps {
-                script {
-                    echo sh(script: "pnpm i --prod")
-                }
-            }
-        }
         stage("Execute bddgen"){
-            agent { docker { 
-                    image 'daigoro86dev/playwright-bdd-docker:latest' 
-                    reuseNode true
-                } 
-            }
             steps {
                 script {
-                    echo sh(script: "pnpm exec bddgen")
+                    echo sh(script: "pnpm run bddgen")
                 }
             }
         }
         stage("Run PlayWright tests"){
-            agent { docker { 
-                    image 'daigoro86dev/playwright-bdd-docker:latest' 
-                    reuseNode true
-                } 
-            }
             steps {
                 script {
                     parallel executeTestParallel()
                 }
             }
-        }
-        // stage("Send TR report"){
-        //     agent {
-        //         docker { image 'node:20.17.0-alpine3.20' }
-        //     }
-        //     steps {
-        //         script {
-        //             echo sh("curl -LsSf https://astral.sh/uv/install.sh | sh")
-        //             echo sh("uv python install 3.12")
-        //             // sendReportToTestRail()
-        //         }
-        //     }
-        // }    
+        }    
     }
     post {
         always {
