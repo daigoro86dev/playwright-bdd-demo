@@ -18,16 +18,12 @@ pipeline {
     stages {
         stage("Execute bddgen"){
             steps {
-                script {
-                    echo sh(script: "pnpm run bddgen")
-                }
+                sh 'pnpm run bddgen'
             }
         }
         stage("Run PlayWright tests"){
             steps {
-                script {
-                    parallel executeTestParallel()
-                }
+                parallel executeTestParallel()
             }
         }    
     }
@@ -73,5 +69,5 @@ void executeTestParallel() {
 }
 
 void sendReportToTestRail(){
-    echo sh(script: "uvx trcli -y -h '${TR_DOMAIN}' --project 'Demo Project' --username '${TR_USERNAME}' --password '${TR_PASSWORD}' parse_junit --title 'Playwright Automated Demo Test Run' -f './results.xml'")
+    sh "uvx trcli -y -h '${TR_DOMAIN}' --project 'Demo Project' --username '${TR_USERNAME}' --password '${TR_PASSWORD}' parse_junit --title 'Playwright Automated Demo Test Run' -f './results.xml'"
 }
