@@ -19,13 +19,9 @@ pipeline {
         stage("Execute bddgen"){
             steps {
                 sh 'pnpm run bddgen'
-            }
-        }
-        stage("Run PlayWright tests"){
-            steps {
                 parallel executeTestParallel()
             }
-        }    
+        }  
     }
     // post {
     //     always {
