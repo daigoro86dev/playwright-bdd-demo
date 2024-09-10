@@ -18,8 +18,8 @@ pipeline {
         USE_ALLURE = 1
     }
     stages {
-        agent { docker { image 'daigoro86dev/playwright-bdd-docker:latest' } }
         stage("Install Node Dependencies"){
+            agent { docker { image 'daigoro86dev/playwright-bdd-docker:latest' } }
             steps {
                 script {
                     echo sh(script: "pnpm i --prod")
@@ -27,6 +27,7 @@ pipeline {
             }
         }
         stage("Execute bddgen"){
+            agent { docker { image 'daigoro86dev/playwright-bdd-docker:latest' } }
             steps {
                 script {
                     echo sh(script: "pnpm exec bddgen")
@@ -34,6 +35,7 @@ pipeline {
             }
         }
         stage("Run PlayWright tests"){
+            agent { docker { image 'daigoro86dev/playwright-bdd-docker:latest' } }
             steps {
                 script {
                     parallel executeTestParallel()
