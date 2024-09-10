@@ -2,7 +2,7 @@
 import groovy.json.JsonOutput
 
 pipeline {
-    agent { docker { image 'daigoro86dev/playwright-bdd-docker' } }
+    agent { docker { image 'mcr.microsoft.com/playwright:v1.47.0-noble' } }
     environment {
         NODE_ENV = "${env.NODE_ENV}"
         PW_PROJECT= "${env.PW_PROJECT}"
