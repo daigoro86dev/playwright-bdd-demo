@@ -2,7 +2,6 @@
 import groovy.json.JsonOutput
 
 pipeline {
-    agent { docker { image 'daigoro86dev/playwright-bdd-docker:latest' } }
     environment {
         NODE_ENV = "${env.NODE_ENV}"
         PW_PROJECT= "${env.PW_PROJECT}"
@@ -15,6 +14,7 @@ pipeline {
         TR_PASSWORD = "${env.PASSWORD}"
         USE_ALLURE = 1
     }
+    agent { docker { image 'daigoro86dev/playwright-bdd-docker:latest' } }
     stages {
         stage("Execute bddgen"){
             steps {
@@ -27,27 +27,27 @@ pipeline {
             }
         }    
     }
-    post {
-        always {
-            archiveArtifacts artifacts: 'results.xml', followSymlinks: false
-            // archiveArtifacts artifacts: 'allure-results/*', followSymlinks: false
-            // script {
-            //     ws("$workspace/") {
-            //         allure([
-            //             includeProperties: false,
-            //             jdk: '',
-            //             properties: [],
-            //             reportBuildPolicy: 'ALWAYS',
-            //             results: [
-            //                 [path: 'allure-results']
-            //             ]
-            //         ])
-            //     }
-            // }
-            sendReportToTestRail()
-            cleanWs()
-        }
-    }
+    // post {
+    //     always {
+    //         archiveArtifacts artifacts: 'results.xml', followSymlinks: false
+    //         // archiveArtifacts artifacts: 'allure-results/*', followSymlinks: false
+    //         // script {
+    //         //     ws("$workspace/") {
+    //         //         allure([
+    //         //             includeProperties: false,
+    //         //             jdk: '',
+    //         //             properties: [],
+    //         //             reportBuildPolicy: 'ALWAYS',
+    //         //             results: [
+    //         //                 [path: 'allure-results']
+    //         //             ]
+    //         //         ])
+    //         //     }
+    //         // }
+    //         sendReportToTestRail()
+    //         cleanWs()
+    //     }
+    // }
 }
 
 String getTestCommand(String shard) {
