@@ -2,6 +2,7 @@
 import groovy.json.JsonOutput
 
 pipeline {
+    agent { docker { image 'daigoro86dev/playwright-bdd-docker:latest' } }
     environment {
         NODE_ENV = "${env.NODE_ENV}"
         PW_PROJECT= "${env.PW_PROJECT}"
@@ -14,14 +15,15 @@ pipeline {
         TR_PASSWORD = "${env.PASSWORD}"
         USE_ALLURE = 1
     }
-    agent { docker { image 'daigoro86dev/playwright-bdd-docker:latest' } }
     stages {
         stage("Execute bddgen"){
             steps {
-                sh 'pnpm run bddgen'
-                parallel executeTestParallel()
+                sh(script: "pnpm run bddgen")
+                script {
+                    parallel executeTestParallel()
+                }
             }
-        }  
+        }    
     }
     // post {
     //     always {
@@ -65,5 +67,5 @@ void executeTestParallel() {
 }
 
 void sendReportToTestRail(){
-    sh "uvx trcli -y -h '${TR_DOMAIN}' --project 'Demo Project' --username '${TR_USERNAME}' --password '${TR_PASSWORD}' parse_junit --title 'Playwright Automated Demo Test Run' -f './results.xml'"
+    echo sh(script: "uvx trcli -y -h '${TR_DOMAIN}' --project 'Demo Project' --username '${TR_USERNAME}' --password '${TR_PASSWORD}' parse_junit --title 'Playwright Automated Demo Test Run' -f './results.xml'")
 }
