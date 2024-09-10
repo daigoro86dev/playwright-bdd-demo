@@ -23,7 +23,7 @@ pipeline {
         }
         stage("Execute bddgen"){
             steps {
-                sh 'npx bddgen'
+                sh 'npm run bddgen'
             }
         }
         stage("Run PlayWright tests"){
@@ -68,7 +68,7 @@ void executeTestParallel() {
         def stageName = "Shard ${i}"
         tests[command] = { 
             stage("${env.PW_TAG} - ${stageName}") {
-                echo sh "${command}"
+                sh "${command}"
             }
         }
     }
@@ -76,5 +76,5 @@ void executeTestParallel() {
 }
 
 void sendReportToTestRail(){
-    echo sh "uvx trcli -y -h '${TR_DOMAIN}' --project 'Demo Project' --username '${TR_USERNAME}' --password '${TR_PASSWORD}' parse_junit --title 'Playwright Automated Demo Test Run' -f './results.xml'"
+    sh "uvx trcli -y -h '${TR_DOMAIN}' --project 'Demo Project' --username '${TR_USERNAME}' --password '${TR_PASSWORD}' parse_junit --title 'Playwright Automated Demo Test Run' -f './results.xml'"
 }
