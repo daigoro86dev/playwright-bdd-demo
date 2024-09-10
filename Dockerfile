@@ -22,3 +22,5 @@ ADD https://astral.sh/uv/install.sh /uv-installer.sh
 RUN sh /uv-installer.sh && rm /uv-installer.sh
 
 ENV PATH="/root/.cargo/bin/:$PATH"
+
+RUN uv python install 3.12
