@@ -2,7 +2,7 @@
 import groovy.json.JsonOutput
 
 pipeline {
-    agent { docker { image 'mcr.microsoft.com/playwright:v1.46.0-jammy' } }
+    agent { docker { image 'playwright-docker:latest' } }
     environment {
         NODE_ENV = "${env.NODE_ENV}"
         PW_PROJECT= "${env.PW_PROJECT}"
@@ -19,14 +19,14 @@ pipeline {
         stage("Install Node Dependencies"){
             steps {
                 script {
-                    echo sh(script: "npm i --no-fund --no-audit --omit=dev")
+                    echo sh(script: "pnpm i --prod")
                 }
             }
         }
         stage("Execute bddgen"){
             steps {
                 script {
-                    echo sh(script: "npx bddgen")
+                    echo sh(script: "pnpm exec bddgen")
                 }
             }
         }
@@ -74,7 +74,7 @@ pipeline {
 }
 
 String getTestCommand(String shard) {
-    return "npx playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
+    return "pnpm exec playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
 }
 
 void executeTestParallel() {
