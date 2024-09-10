@@ -2,9 +2,7 @@
 import groovy.json.JsonOutput
 
 pipeline {
-    agent {  
-        label "docker:dind"
-    } 
+    agent none
     environment {
         NODE_ENV = "${env.NODE_ENV}"
         PW_PROJECT= "${env.PW_PROJECT}"
@@ -19,7 +17,11 @@ pipeline {
     }
     stages {
         stage("Install Node Dependencies"){
-            agent { docker { image 'daigoro86dev/playwright-bdd-docker:latest' } }
+            agent { docker { 
+                    image 'daigoro86dev/playwright-bdd-docker:latest' 
+                    reuseNode true
+                } 
+            }
             steps {
                 script {
                     echo sh(script: "pnpm i --prod")
@@ -27,7 +29,11 @@ pipeline {
             }
         }
         stage("Execute bddgen"){
-            agent { docker { image 'daigoro86dev/playwright-bdd-docker:latest' } }
+            agent { docker { 
+                    image 'daigoro86dev/playwright-bdd-docker:latest' 
+                    reuseNode true
+                } 
+            }
             steps {
                 script {
                     echo sh(script: "pnpm exec bddgen")
@@ -35,7 +41,11 @@ pipeline {
             }
         }
         stage("Run PlayWright tests"){
-            agent { docker { image 'daigoro86dev/playwright-bdd-docker:latest' } }
+            agent { docker { 
+                    image 'daigoro86dev/playwright-bdd-docker:latest' 
+                    reuseNode true
+                } 
+            }
             steps {
                 script {
                     parallel executeTestParallel()
