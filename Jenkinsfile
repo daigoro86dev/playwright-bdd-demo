@@ -2,7 +2,9 @@
 import groovy.json.JsonOutput
 
 pipeline {
-    agent { docker { image 'daigoro86dev/playwright-bdd-docker:latest' } }
+    agent {  
+        label "docker:dind"
+    } 
     environment {
         NODE_ENV = "${env.NODE_ENV}"
         PW_PROJECT= "${env.PW_PROJECT}"
@@ -16,6 +18,7 @@ pipeline {
         USE_ALLURE = 1
     }
     stages {
+        agent { docker { image 'daigoro86dev/playwright-bdd-docker:latest' } }
         stage("Install Node Dependencies"){
             steps {
                 script {
