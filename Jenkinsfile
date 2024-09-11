@@ -15,6 +15,7 @@ pipeline {
         TR_PASSWORD = "${env.TR_PASSWORD}"
         TR_TITLE = "${env.TR_TITLE}"
         USE_ALLURE = 1
+        PLAYWRIGHT_JUNIT_OUTPUT_NAME="junit_results/results.xml"
     }
     stages {
         stage("Install dependencies"){
@@ -37,7 +38,7 @@ pipeline {
     }
     post {
         always {
-            archiveArtifacts artifacts: '*.xml', followSymlinks: false
+            archiveArtifacts artifacts: 'junit_results/results.xml', followSymlinks: false
             sendReportToTestRail()
             cleanWs()
         }
@@ -45,7 +46,7 @@ pipeline {
 }
 
 String getTestCommand(String shard) {
-    return "PLAYWRIGHT_JUNIT_OUTPUT_NAME=shard_${shard}_result.xml && pnpm exec playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
+    return "pnpm exec playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
 }
 
 void executeTestParallel() {
@@ -63,7 +64,6 @@ void executeTestParallel() {
 }
 
 void sendReportToTestRail(){
-    for (int i = 1; i <= env.PW_SHARDS.toInteger(); i++) {
-        sh "uvx trcli -y -h '${TR_DOMAIN}' --project 'Demo Project' --username '${TR_USERNAME}' --password '${TR_PASSWORD}' parse_junit --title '${TR_TITLE}' -f './shard_${i}_result.xml'"    
-    }   
+    sh "pnpm exec playwright merge-reports --reporter junit ./blob-report"
+    sh "uvx trcli -y -h '${TR_DOMAIN}' --project 'Demo Project' --username '${TR_USERNAME}' --password '${TR_PASSWORD}' parse_junit --title '${TR_TITLE}' -f './${PLAYWRIGHT_JUNIT_OUTPUT_NAME}"
 }

@@ -9,7 +9,7 @@ const testDir = process.env.NO_BDD === "1" ? "tests" : defineBddConfig({
 
 export default defineConfig({
   testDir: testDir,
-  reporter: [['junit']],
+  reporter: [['blob']],
   projects: [
     {
       name: 'chrome',
