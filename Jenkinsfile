@@ -45,7 +45,7 @@ pipeline {
 }
 
 String getTestCommand(String shard) {
-    return "pnpm exec playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
+    return "PLAYWRIGHT_BLOB_OUTPUT_FILE='./blob-report/report-${shard}.zip' pnpm exec playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
 }
 
 void executeTestParallel() {
