@@ -45,7 +45,7 @@ pipeline {
 }
 
 String getTestCommand(String shard) {
-    return "export PLAYWRIGHT_JUNIT_OUTPUT_NAME=shard_${shard}_result.xml && pnpm exec playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
+    return "PLAYWRIGHT_JUNIT_OUTPUT_NAME=shard_${shard}_result.xml && pnpm exec playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
 }
 
 void executeTestParallel() {
@@ -63,5 +63,7 @@ void executeTestParallel() {
 }
 
 void sendReportToTestRail(){
-    sh "uvx trcli -y -h '${TR_DOMAIN}' --project 'Demo Project' --username '${TR_USERNAME}' --password '${TR_PASSWORD}' parse_junit --title '${TR_TITLE}' -f './*.xml'"
+    for (int i = 1; i <= env.PW_SHARDS.toInteger(); i++) {
+        sh "uvx trcli -y -h '${TR_DOMAIN}' --project 'Demo Project' --username '${TR_USERNAME}' --password '${TR_PASSWORD}' parse_junit --title '${TR_TITLE}' -f './shard_${i}_result.xml'"    
+    }   
 }
