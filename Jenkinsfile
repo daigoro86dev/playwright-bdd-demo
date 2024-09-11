@@ -18,12 +18,12 @@ pipeline {
     stages {
         stage("Install dependencies"){
             steps {
-                sh 'npm i --no-fund --no-audit --omit=dev'
+                sh 'pnpm i --prod'
             }
         }
         stage("Execute bddgen"){
             steps {
-                sh 'npm run bddgen'
+                sh 'pnpm run bddgen'
             }
         }
         stage("Run PlayWright tests"){
@@ -34,31 +34,31 @@ pipeline {
             }
         }    
     }
-    post {
-        always {
-            archiveArtifacts artifacts: 'results.xml', followSymlinks: false
-            // archiveArtifacts artifacts: 'allure-results/*', followSymlinks: false
-            // script {
-            //     ws("$workspace/") {
-            //         allure([
-            //             includeProperties: false,
-            //             jdk: '',
-            //             properties: [],
-            //             reportBuildPolicy: 'ALWAYS',
-            //             results: [
-            //                 [path: 'allure-results']
-            //             ]
-            //         ])
-            //     }
-            // }
-            sendReportToTestRail()
-            cleanWs()
-        }
-    }
+    // post {
+    //     always {
+    //         archiveArtifacts artifacts: 'results.xml', followSymlinks: false
+    //         // archiveArtifacts artifacts: 'allure-results/*', followSymlinks: false
+    //         // script {
+    //         //     ws("$workspace/") {
+    //         //         allure([
+    //         //             includeProperties: false,
+    //         //             jdk: '',
+    //         //             properties: [],
+    //         //             reportBuildPolicy: 'ALWAYS',
+    //         //             results: [
+    //         //                 [path: 'allure-results']
+    //         //             ]
+    //         //         ])
+    //         //     }
+    //         // }
+    //         sendReportToTestRail()
+    //         cleanWs()
+    //     }
+    // }
 }
 
 String getTestCommand(String shard) {
-    return "npx playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
+    return "pnpm exec playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
 }
 
 void executeTestParallel() {
