@@ -38,7 +38,6 @@ pipeline {
     }
     post {
         always {
-            archiveArtifacts artifacts: 'junit_results/results.xml', followSymlinks: false
             sendReportToTestRail()
             cleanWs()
         }
