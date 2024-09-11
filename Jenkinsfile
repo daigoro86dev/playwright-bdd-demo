@@ -37,7 +37,7 @@ pipeline {
     }
     post {
         always {
-            archiveArtifacts artifacts: 'results.xml', followSymlinks: false
+            archiveArtifacts artifacts: '*.xml', followSymlinks: false
             sendReportToTestRail()
             cleanWs()
         }
@@ -45,7 +45,7 @@ pipeline {
 }
 
 String getTestCommand(String shard) {
-    return "pnpm exec playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
+    return "PLAYWRIGHT_JUNIT_OUTPUT_NAME=${env._shard}_result.xml pnpm exec playwright test --workers=${env.PW_WORKERS} --shard=${shard}/${env.PW_SHARDS} --grep \"^(?=.*@${env.PW_TAG})\" --project=${env.PW_PROJECT}"
 }
 
 void executeTestParallel() {
@@ -63,5 +63,5 @@ void executeTestParallel() {
 }
 
 void sendReportToTestRail(){
-    sh "uvx trcli -y -h '${TR_DOMAIN}' --project 'Demo Project' --username '${TR_USERNAME}' --password '${TR_PASSWORD}' parse_junit --title '${TR_TITLE}' -f './results.xml'"
+    sh "uvx trcli -y -h '${TR_DOMAIN}' --project 'Demo Project' --username '${TR_USERNAME}' --password '${TR_PASSWORD}' parse_junit --title '${TR_TITLE}' -f './*.xml'"
 }
