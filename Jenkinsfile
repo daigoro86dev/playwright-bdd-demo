@@ -64,5 +64,5 @@ void executeTestParallel() {
 
 void sendReportToTestRail(){
     sh "pnpm exec playwright merge-reports --reporter junit ./blob-report"
-    sh "uvx trcli -y -h '${TR_DOMAIN}' --project 'Demo Project' --username '${TR_USERNAME}' --password '${TR_PASSWORD}' parse_junit --title '${TR_TITLE}' -f './${PLAYWRIGHT_JUNIT_OUTPUT_NAME}"
+    sh "uvx trcli -y -h '${TR_DOMAIN}' --project 'Demo Project' --username '${TR_USERNAME}' --password '${TR_PASSWORD}' parse_junit --title '${TR_TITLE}' -f './${PLAYWRIGHT_JUNIT_OUTPUT_NAME}'"
 }
