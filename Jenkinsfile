@@ -13,6 +13,7 @@ pipeline {
         TR_DOMAIN = "${env.TR_DOMAIN}"
         TR_USERNAME = "${env.TR_USERNAME}"
         TR_PASSWORD = "${env.TR_PASSWORD}"
+        TR_TITLE = "${env.TR_TITLE}"
         USE_ALLURE = 1
     }
     stages {
@@ -76,5 +77,5 @@ void executeTestParallel() {
 }
 
 void sendReportToTestRail(){
-    sh "uvx trcli -y -h '${TR_DOMAIN}' --project 'Demo Project' --username '${TR_USERNAME}' --password '${TR_PASSWORD}' parse_junit --title 'Playwright Automated Demo Test Run' -f './results.xml'"
+    sh "uvx trcli -y -h '${TR_DOMAIN}' --project 'Demo Project' --username '${TR_USERNAME}' --password '${TR_PASSWORD}' parse_junit --title '${TR_TITLE}' -f './results.xml'"
 }
