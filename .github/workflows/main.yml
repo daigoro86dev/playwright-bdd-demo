@@ -19,7 +19,7 @@ jobs:
     - name: Run bddgen
       run: pnpm run bddgen
     - name: Run Playwright tests
-      run: pnpm exec playwright test
+      run: pnpm exec playwright test --project=chrome
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
