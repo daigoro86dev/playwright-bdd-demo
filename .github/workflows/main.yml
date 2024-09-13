@@ -1,13 +1,14 @@
 name: Playwright BDD Tests
 on:
   push:
-    branches: [ main, workerdemo ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, workerdemo ]
+    branches: [ main]
 jobs:
   test:
     timeout-minutes: 60
-    runs-on: daigoro86dev/playwright-bdd-docker:latest
+    runs-on: ubuntu-latest
+    container: daigoro86dev/playwright-bdd-docker:latest
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
